@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TheDoctor - Healthcare Platform</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    <script>
+      // Debug: ensure root div exists
+      if (!document.getElementById('root')) {
+        console.error('ERROR: Root element not found!');
+        document.body.innerHTML = '<h1>Error: Root element not found</h1>';
+      } else {
+        console.log('✓ Root element found, loading app...');
+      }
+    </script>
+  </body>
+</html>
