@@ -6,6 +6,8 @@ import connectDB from "./config/db.js";
 
 connectDB();
 
-app.listen(5000, () => {
-  console.log("TheDoctor backend running on port 5000");
+const PORT = process.env.PORT || 5001;
+
+app.listen(PORT, () => {
+  console.log(`TheDoctor backend running on port ${PORT}`);
 });
