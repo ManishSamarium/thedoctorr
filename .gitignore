@@ -25,6 +25,18 @@ logs/
 .DS_Store
 Thumbs.db
 
+# Editor folders
+.vscode/
+.idea/
+
+# Python virtualenvs
+.venv/
+env/
+
+# Python cache and test
+.pytest_cache/
+*.sqlite3
+
 # Build
 dist/
 build/
