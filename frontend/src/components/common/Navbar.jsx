@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import api from "../../api/axios";
 
 const Navbar = () => {
   const { user, setUser, loading } = useAuth();
@@ -8,11 +9,8 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      // Call logout endpoint
-      await fetch("http://localhost:5000/api/auth/logout", {
-        method: "POST",
-        credentials: "include",
-      });
+      // Call logout endpoint through configured axios (includes credentials)
+      await api.post("/auth/logout");
       setUser(null);
       navigate("/login");
     } catch (err) {
@@ -32,10 +30,8 @@ const Navbar = () => {
     const fetchProfile = async () => {
       if (user?.role === "doctor") {
         try {
-          const res = await fetch("http://localhost:5000/api/doctor/profile", {
-            credentials: "include",
-          });
-          const data = await res.json();
+          const res = await api.get("/doctor/profile");
+          const data = res.data;
           if (mounted && data) setProfile(data);
         } catch (err) {
           // ignore
@@ -142,7 +138,7 @@ const Navbar = () => {
                 <div className="flex items-center gap-4 border-l border-gray-200 pl-6">
                   {profile?.profileImage ? (
                     <img
-                      src={`http://localhost:5000/${profile.profileImage}`}
+                      src={`${(import.meta.env.VITE_API_BASE_URL || "http://localhost:5001/api").replace(/\/api$/, "")}/${profile.profileImage}`}
                       alt="avatar"
                       className="w-10 h-10 rounded-full object-cover"
                     />
