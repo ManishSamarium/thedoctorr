@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: thedoctor-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    # Render will provide $PORT; server.js reads process.env.PORT
+    # Set environment variables (MONGO_URI, JWT_SECRET, ML_SERVICE_URL, FRONTEND_URL) in Render UI

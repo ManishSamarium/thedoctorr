@@ -11,3 +11,13 @@ class SymptomRequest(BaseModel):
 def predict(req: SymptomRequest):
     result = predict_disease(req.symptoms)
     return {"predictions": result}
+
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
+
+@app.get("/")
+def root():
+    return {"service": "thedoctor_ml_service", "status": "running"}

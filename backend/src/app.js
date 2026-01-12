@@ -14,7 +14,8 @@ import ratingRoutes from "./routes/rating.rout.js";
 const app = express();
 
 // Middleware
-app.use(cors({ origin: true, credentials: true }));
+const FRONTEND_URL = process.env.FRONTEND_URL || true; // set in production to your Vercel URL
+app.use(cors({ origin: FRONTEND_URL, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ limit: "10mb" }));
 app.use(cookieParser());
