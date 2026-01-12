@@ -12,10 +12,6 @@ __pycache__/
 venv/
 .env
 
-# ML model files
-*.h5
-*.pkl
-*.joblib
 
 # Logs
 logs/
