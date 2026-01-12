@@ -44,12 +44,14 @@ export const register = async (req, res) => {
       { expiresIn: "7d" }
     );
 
-    res.cookie("token", token, {
+    const cookieOptions = {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
-    });
+    };
+
+    res.cookie("token", token, cookieOptions);
 
     res.status(201).json({
       message: "Registration successful",
@@ -98,12 +100,14 @@ export const login = async (req, res) => {
     );
 
     // Set HTTP-only cookie
-    res.cookie("token", token, {
+    const cookieOptions = {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
-    });
+    };
+
+    res.cookie("token", token, cookieOptions);
 
     res.json({
       message: "Login successful",
