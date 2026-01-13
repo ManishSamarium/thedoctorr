@@ -32,3 +32,16 @@ export const getPrediction = async (req, res) => {
     res.status(500).json({ message });
   }
 };
+
+// Public endpoint to test ML connectivity from backend (no auth)
+export const testML = async (req, res) => {
+  try {
+    const sample = ["fever", "cough"];
+    const mlResult = await predictDisease(sample);
+    res.json({ ok: true, sample, mlResult });
+  } catch (err) {
+    console.error("ML test error:", err?.response?.status, err?.response?.data || err.message || err);
+    const detail = err?.response?.data || err?.message || "Unknown error";
+    res.status(500).json({ ok: false, error: detail });
+  }
+};
