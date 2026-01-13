@@ -9,7 +9,7 @@ export const getPrediction = async (req, res) => {
       return res.status(400).json({ message: "Symptoms array required" });
     }
 
-    // 1. Call ML service (UNCHANGED)
+    // 1. Call ML service (may throw axios error)
     const mlResult = await predictDisease(symptoms);
 
     // 2. Save report to MongoDB
@@ -26,7 +26,9 @@ export const getPrediction = async (req, res) => {
       predictions: report.predictions
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Prediction failed" });
+    // Better logging: if axios error, log response status/data
+    console.error("Prediction error:", err?.response?.status, err?.response?.data || err.message || err);
+    const message = err?.response?.data?.message || err?.message || "Prediction failed";
+    res.status(500).json({ message });
   }
 };

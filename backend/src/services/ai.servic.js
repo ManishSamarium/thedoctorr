@@ -7,7 +7,8 @@ export const predictDisease = async (symptoms) => {
     const response = await axios.post(`${ML_SERVICE_URL}/predict`, { symptoms });
     return response.data;
   } catch (err) {
-    console.error("AI service error:", err?.response?.data || err.message);
-    throw new Error("AI prediction service unavailable");
+    console.error("AI service error:", err.response?.status, err.response?.data || err.message);
+    // Rethrow the original error so callers can inspect response/status
+    throw err;
   }
 };

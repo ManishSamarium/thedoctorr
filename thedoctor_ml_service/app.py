@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from fastapi import HTTPException
 
 app = FastAPI()
 
@@ -31,7 +32,8 @@ def predict(req: SymptomRequest):
         result = predict_disease(req.symptoms)
         return {"predictions": result}
     except Exception as e:
-        return {"error": str(e)}
+        # Surface real error as an HTTP 500 with a message for easier diagnosis
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @app.get("/health")
